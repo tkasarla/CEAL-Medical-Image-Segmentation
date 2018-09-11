@@ -1,3 +1,8 @@
+## Modified version
+
+Code modified for ICNet and Cityscapes Dataset.
+
+
 # Active Deep Learning for Medical Imaging Segmentation
 
 | ![Marc Górriz][MarcGorriz-photo]  |  ![Axel Carlier][AxelCarlier-photo] | ![Emmanuel Faure][EmmanuelFaure-photo]  | ![Xavier Giro-i-Nieto][XavierGiro-photo]  |
