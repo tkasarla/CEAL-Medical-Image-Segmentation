@@ -25,29 +25,39 @@ def create_train_data():
     """
     Generate training data numpy arrays and save them into the project path
     """
-
+    data_path = '/data/path/to/cityscapes/cityscapes/'
     image_rows = 420
     image_cols = 580
 
-    images = os.listdir(data_path)
-    masks = os.listdir(masks_path)
+    list_images=np.genfromtxt('train_icnet.txt',dtype='str')
+
+    images = list_images[:,0]
+    masks = list_images[:,1]
+
+    #images = os.listdir(data_path)
+    #masks = os.listdir(masks_path)
+
     total = len(images)
 
-    imgs = np.ndarray((total, 1, image_rows, image_cols), dtype=np.uint8)
-    imgs_mask = np.ndarray((total, 1, image_rows, image_cols), dtype=np.uint8)
+    imgs = np.ndarray((total, 1, image_cols, image_rows), dtype=np.uint8)
+    imgs_mask = np.ndarray((total, 1, image_cols, image_rows), dtype=np.uint8)
 
+    i=0
     for image_name in images:
+        print(i)
         img = cv2.imread(os.path.join(data_path, image_name), cv2.IMREAD_GRAYSCALE)
         img = cv2.resize(img, (image_rows, image_cols), interpolation=cv2.INTER_CUBIC)
         img = np.array([img])
-        imgs[i] = img
+        i = i+1
 
+    i=0
     for image_mask_name in masks:
-        img_mask = cv2.imread(os.path.join(masks_path, image_mask_name), cv2.IMREAD_GRAYSCALE)
+        print(i)
+        img_mask = cv2.imread(os.path.join(data_path, image_mask_name), cv2.IMREAD_GRAYSCALE)
         img_mask = cv2.resize(img_mask, (image_rows, image_cols), interpolation=cv2.INTER_CUBIC)
         img_mask = np.array([img_mask])
         imgs_mask[i] = img_mask
-
+        i=i+1
     np.save('imgs_train.npy', imgs)
     np.save('imgs_mask_train.npy', imgs_mask)
 
@@ -58,8 +68,8 @@ def load_train_data():
     :return: [X_train, y_train] numpy arrays containing the training data and their respective masks.
     """
     print("\nLoading train data...\n")
-    X_train = np.load(gzip.open('skin_database/imgs_train.npy.gz'))
-    y_train = np.load(gzip.open('skin_database/imgs_mask_train.npy.gz'))
+    X_train = np.load('imgs_train.npy')
+    y_train = np.load('imgs_mask_train.npy')
 
     X_train = preprocessor(X_train)
     y_train = preprocessor(y_train)
