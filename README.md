@@ -1,6 +1,8 @@
 ## Modified version
 
-Code modified for ICNet and Cityscapes Dataset.
+Code modified for ICNet and Cityscapes Dataset. 
+
+Details will be uploaded soon.
 
 
 # Active Deep Learning for Medical Imaging Segmentation
